@@ -117,6 +117,8 @@ class XMLSecurityDSig
             $template = str_replace($search, $replace, $template);
         }
         $sigdoc = new DOMDocument();
+        $sigdoc->preserveWhiteSpace = false;
+        $sigdoc->formatOutput = false;
         $sigdoc->loadXML($template);
         $this->sigNode = $sigdoc->documentElement;
     }
@@ -1050,7 +1052,7 @@ class XMLSecurityDSig
                             }
                             $subjectNameValue = implode(',', $parts);
                         } else {
-                            $subjectNameValue = $certData['subject'];
+                            $subjectNameValue = $certData['issuer'];
                         }
                         $x509SubjectNode = $baseDoc->createElementNS(self::XMLDSIGNS, $dsig_pfx.'X509SubjectName', $subjectNameValue);
                         $x509DataNode->appendChild($x509SubjectNode);
